@@ -1,0 +1,21 @@
+# Challenge URL:
+# -----------------------------------------------------------------------------------------------------
+# Process to solve the problem
+# -----------------------------------------------------------------------------------------------------
+
+from lib.challenge import Challenge
+
+class ${NAME}(Challenge):
+
+    def do_compute(self):
+        pass
+
+
+if __name__ == '__main__':
+    current_url = ''
+    print "start with url: " + current_url
+
+    challenge = ${NAME}(current_url)
+    challenge.do_compute()
+    # print "Next Challenge URL: " + challenge.get_next_level_url()
+    # Next Challenge URL:
