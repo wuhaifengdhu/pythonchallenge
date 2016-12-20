@@ -5,7 +5,6 @@
 
 from lib.challenge import Challenge
 from lib.text_helper import TextHelper
-import re
 
 
 class T3(Challenge):
@@ -16,7 +15,7 @@ class T3(Challenge):
         # step 2. Get target characters
         characters = TextHelper.find_pattern_in_content(self.web_source, '[^A-Z][A-Z]{3}(?P<Boss>[a-z])[A-Z]{3}[^A-Z]')
 
-        # step 3. Get prompt of next level challange url
+        # step 3. Get prompt of next level challenge url
         self.set_prompt(''.join(characters))
 
 

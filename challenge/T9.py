@@ -5,16 +5,10 @@
 
 from lib.challenge import Challenge
 from lib.text_helper import TextHelper
-from lib.web_helper import WebHelper
 from PIL import Image, ImageDraw
 
 
 class T9(Challenge):
-
-    def __init__(self, url, user_name, pass_word):
-        self.url, self.web_source = WebHelper.get_auth_url_content(url, user_name, pass_word)
-        self._prompt = None
-        self._next_level_url = None
 
     def do_compute(self):
         # step 1. get information from web
@@ -43,6 +37,6 @@ if __name__ == '__main__':
     password = 'file'
     print "start with url: " + current_url
 
-    challenge = T9(current_url, user, password)
+    challenge = T9(current_url, True, user, password)
     print "Next Challenge URL: " + challenge.get_next_level_url()
     # Next Challenge URL: http://www.pythonchallenge.com/pc/return/bull.html
