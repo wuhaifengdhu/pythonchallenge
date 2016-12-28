@@ -107,7 +107,7 @@ class WebHelper(object):
         return web_url[web_url.rindex("/") + 1:]
 
     @staticmethod
-    def get_auth_url_content(url, user, password):
+    def get_auth_url_content(url, user='huge', password='file'):
         page = urllib2.HTTPPasswordMgrWithDefaultRealm()
         page.add_password(None, url, user, password)
         handler = urllib2.HTTPBasicAuthHandler(page)

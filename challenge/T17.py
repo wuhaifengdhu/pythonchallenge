@@ -9,17 +9,17 @@ from lib.web_helper import WebHelper
 from PIL import Image
 from cStringIO import StringIO
 
-class ${NAME}(Challenge):
 
+class T17(Challenge):
     def do_compute(self):
         pass
 
 
 if __name__ == '__main__':
-    current_url = ''
+    current_url = 'http://www.pythonchallenge.com/pc/return/romance.html'
     print "start with url: " + current_url
 
-    challenge = ${NAME}(current_url)
+    challenge = T17(current_url)
     challenge.do_compute()
     # print "Next Challenge URL: " + challenge.get_next_level_url()
-    # Next Challenge URL:
+    # Next Challenge URL: 

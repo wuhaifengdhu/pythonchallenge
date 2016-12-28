@@ -16,4 +16,7 @@ class FileHelper(object):
 
     @staticmethod
     def get_file_content(file_path):
-        return open(file_path).read()
+        file_handler = open(file_path)
+        data = file_handler.read()
+        file_handler.close()
+        return data
