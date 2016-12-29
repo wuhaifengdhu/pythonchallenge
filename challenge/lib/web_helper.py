@@ -1,11 +1,45 @@
 import urllib2
 from urlparse import urljoin
 from urllib import urlretrieve
+from urllib import quote_plus, unquote_plus
+import cookielib
 import requests
 from requests.auth import HTTPBasicAuth
 
 
 class WebHelper(object):
+
+    @staticmethod
+    def get_cookie_content_from_url(web_url):
+        req = urllib2.Request(web_url)
+        cj = cookielib.CookieJar()
+        opener = urllib2.build_opener(urllib2.HTTPCookieProcessor(cj), urllib2.HTTPHandler())
+        response = opener.open(req)
+        data = response.read()
+        cookie_list = []
+        for cookie in cj:
+            cookie_list.append(unquote_plus(cookie.value))
+        return cookie_list, data
+
+    @staticmethod
+    def get_traverse_cookie(start_url, pre_pattern):
+        cookies, web_source = WebHelper.get_cookie_content_from_url(start_url)
+        if pre_pattern in web_source:
+            next_para = web_source[web_source.index(pre_pattern) + len(pre_pattern):].strip()
+            para_index = start_url.rindex('=') + len("=")
+            next_url = start_url[:para_index] + next_para
+            print "web source: " + web_source
+            print "Get next url: " + next_url
+            cookies.extend(WebHelper.get_traverse_cookie(next_url, pre_pattern))
+        elif "Divide by two and keep going" in web_source:
+            para_index = start_url.rindex('=') + len("=")
+            para = start_url[para_index:]
+            next_para = str(int(para) / 2)
+            next_url = start_url[:para_index] + next_para
+            print "web source: " + web_source
+            print "Get next url: " + next_url
+            cookies.extend(WebHelper.get_traverse_cookie(next_url, pre_pattern))
+        return cookies
 
     @staticmethod
     def get_final_url_content(web_url, web_source=None):
