@@ -5,6 +5,7 @@ from urllib import quote_plus, unquote_plus
 import cookielib
 import requests
 from requests.auth import HTTPBasicAuth
+from text_helper import TextHelper
 
 
 class WebHelper(object):
@@ -149,6 +150,14 @@ class WebHelper(object):
         urllib2.install_opener(opener)
         response = urllib2.urlopen(url)
         return response.geturl(), response.read()
+
+    @staticmethod
+    def get_prompt_url_from_web(url, start_tag, end_tag, user='huge', password='file'):
+        url_ignore, web_content = WebHelper.get_auth_url_content(url, user, password)
+        prompt_url_short = TextHelper.find_text_between_tag(web_content, start_tag, end_tag)
+        prompt_url = WebHelper.join_url(url, prompt_url_short)
+        print "get new prompt url: %s" % prompt_url
+        return prompt_url
 
 
 if __name__ == '__main__':

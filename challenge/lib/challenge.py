@@ -2,12 +2,16 @@ from web_helper import WebHelper
 
 
 class Challenge(object):
+    user = ''
+    password = ''
 
     def __init__(self, url, need_authentication=False, user_name='huge', pass_word='file'):
         if need_authentication:
             self.url, self.web_source = WebHelper.get_auth_url_content(url, user_name, pass_word)
         else:
             self.url, self.web_source = WebHelper.get_final_url_content(url)
+        self.user = user_name
+        self.password = pass_word
         self._prompt = None
         self._next_level_url = None
 

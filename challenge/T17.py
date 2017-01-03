@@ -19,7 +19,7 @@ class T17(Challenge):
         # step 1, get picture from web source
         prompt_url = TextHelper.find_text_between_tag(self.web_source, "<img src=\"", "\" border=\"0\"/>")
         cookie_img_url = WebHelper.join_url(self.url, prompt_url)
-        ImageHelper.show_image(cookie_img_url)  # Do you feel familiar with the embed picture? Yes, the level 4
+        ImageHelper.show_image_from_web(cookie_img_url)  # Do you feel familiar with the embed picture? Yes, the level 4
         level_4_start_url, ignore_content = WebHelper.get_final_url_content("http://www.pythonchallenge.com/pc/def/linkedlist.html")
         print "python challenge level 4 start url: " + level_4_start_url
 
