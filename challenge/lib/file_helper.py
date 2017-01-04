@@ -1,6 +1,7 @@
 import shutil
 import os
 import gzip
+from zipfile import ZipFile
 
 
 class FileHelper(object):
@@ -28,3 +29,15 @@ class FileHelper(object):
         content = zip_file.read()
         zip_file.close()
         return content
+
+    @staticmethod
+    def save_to_zip_file(content, local_name):
+        file_opener = open(local_name, 'wb')
+        file_opener.write(content)
+        file_opener.close()
+
+    @staticmethod
+    def unzip_file_with_password(zip_file, password):
+        zip = ZipFile(zip_file)
+        zip.extractall(pwd=password)
+        zip.close()

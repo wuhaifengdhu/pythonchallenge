@@ -40,7 +40,8 @@ class T19(Challenge):
         print "prompt url: %s" % prompt_url
 
         # step 4, get next level url
-        next_url = WebHelper.get_prompt_url_from_web(prompt_url, '<br><a href="', '">Continue to the', self.user, self.password)
+        next_url = WebHelper.get_prompt_url_from_web(prompt_url, '<br><a href="', '">Continue to the', self.user,
+                                                     self.password)
         self.set_next_level_url(next_url)
 
         # step 5, clean resources
