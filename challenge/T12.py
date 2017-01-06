@@ -5,7 +5,6 @@
 
 from lib.challenge import Challenge
 from lib.text_helper import TextHelper
-from lib.file_helper import FileHelper
 from lib.web_helper import WebHelper
 from cStringIO import StringIO
 from PIL import Image, ImageFile
@@ -22,7 +21,6 @@ class T12(Challenge):
         url_ignore, img_data = WebHelper.get_auth_url_content(img_url)
         img = Image.open(StringIO(img_data))
         img.show()  # shows: we should use suffix .gfx not .jpg
-        img.close()
 
         # step 2. get gfx file
         gfx_url = WebHelper.change_suffix_url(img_url, ".gfx")

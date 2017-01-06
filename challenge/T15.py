@@ -6,6 +6,7 @@
 from lib.challenge import Challenge
 from lib.text_helper import TextHelper
 from lib.web_helper import WebHelper
+from lib.image_helper import ImageHelper
 from calendar import isleap, weekday
 from PIL import Image
 from cStringIO import StringIO
@@ -21,9 +22,7 @@ class T15(Challenge):
         prompt_url = TextHelper.find_text_between_tag(self.web_source, "<img src=\"", "\"><br>")
         img_url = WebHelper.join_url(self.url, prompt_url)
         url_ignore, img_data = WebHelper.get_auth_url_content(img_url)
-        img = Image.open(StringIO(img_data))
-        img.show()  # a calendar shows a date January, 26, 1XX6
-        img.close()
+        ImageHelper.show_image_from_web(img_url)  # a calendar shows a date January, 26, 1XX6
         month = 1
         day = 26
 

@@ -29,9 +29,7 @@ class T16(Challenge):
             line = line[pink:] + line[:pink]
             for w, pixel in enumerate(line):
                 new_img.putpixel((w, h), pixel)
-        img.close()
         new_img.show()  # picture with words: romance
-        new_img.close()
 
         # step 3, set prompt
         self.set_prompt("romance")

@@ -5,6 +5,7 @@
 
 from lib.challenge import Challenge
 from lib.text_helper import TextHelper
+from lib.image_helper import ImageHelper
 from PIL import Image, ImageDraw
 
 
@@ -25,7 +26,6 @@ class T9(Challenge):
         for i in range(0, len(second), 2):
             draw.line(second[i: i + 4], fill='white')
         img.show("prompt")  # it shows a bull
-        img.close()
 
         # step 3. set the prompt
         self.set_prompt("bull")

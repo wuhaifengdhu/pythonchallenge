@@ -65,7 +65,6 @@ class T14(Challenge):
                 wire_img_current_pox = wire_img_current_pox[0] + 1, wire_img_current_pox[1]
                 img.putpixel(new_img_current_pos, wire_img.getpixel(wire_img_current_pox))
         img.show()
-        img.close()
 
 
 if __name__ == '__main__':

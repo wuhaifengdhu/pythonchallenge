@@ -6,6 +6,7 @@
 from lib.challenge import Challenge
 from lib.text_helper import TextHelper
 from lib.web_helper import WebHelper
+from lib.image_helper import ImageHelper
 from cStringIO import StringIO
 from PIL import Image
 
@@ -17,12 +18,10 @@ class T22(Challenge):
         gif_url = WebHelper.join_url(self.url, gif_prompt)
         print "Get gif url: %s" % gif_url
 
-        url_ignore, img_data = WebHelper.get_auth_url_content(gif_url, self.user, self.password)
-        img = Image.open(StringIO(img_data))
-        print img.size
-        im2 = img.point(lambda p: p * 0.5)
-        im2.save("angelababy.jpg")
-
+        ImageHelper.show_image_from_web(gif_url, self.user, self.password)
+        # local_image = WebHelper.get_url_page(gif_url)
+        # WebHelper.download_with_auth(gif_url, local_image, self.user, self.password)
+        # ImageHelper.show_in_windows(local_image)
 
 if __name__ == '__main__':
     current_url = 'http://www.pythonchallenge.com/pc/hex/copper.html'

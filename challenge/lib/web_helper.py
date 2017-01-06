@@ -135,7 +135,6 @@ class WebHelper(object):
         print "download file store into " + store_path
         img = open(store_path, 'wb')
         img.write(response.content)
-        img.close()
 
     @staticmethod
     def get_url_page(web_url):
