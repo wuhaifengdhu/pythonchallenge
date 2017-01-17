@@ -4,7 +4,7 @@
 # -----------------------------------------------------------------------------------------------------
 from lib.challenge import Challenge
 from lib.text_helper import TextHelper
-import string
+f
 
 
 class T(Challenge):

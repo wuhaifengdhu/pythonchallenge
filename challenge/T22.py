@@ -7,7 +7,7 @@ from lib.challenge import Challenge
 from lib.text_helper import TextHelper
 from lib.web_helper import WebHelper
 from lib.image_helper import ImageHelper
-from cStringIO import StringIO
+from lib.file_helper import FileHelper
 from PIL import Image, ImageDraw
 
 
@@ -25,7 +25,7 @@ class T22(Challenge):
 
         # step 2, get Image draw
         img = Image.open(local_image)
-        prompt_img = ImageDraw.Draw("RGB", (500, 200))
+        prompt_img = Image.new("RGB", (500, 200))
         draw = ImageDraw.Draw(prompt_img)
         cx, cy = 0, 100
         for frame in range(img.n_frames):
@@ -49,6 +49,9 @@ class T22(Challenge):
         print "get prompt words from image %s" % prompt_words
         self.set_prompt(prompt_words)
 
+        # step 4, clean unused files
+        FileHelper.remove_file(local_image)
+
 
 if __name__ == '__main__':
     current_url = 'http://www.pythonchallenge.com/pc/hex/copper.html'
@@ -56,5 +59,5 @@ if __name__ == '__main__':
 
     challenge = T22(current_url, True, 'butter', 'fly')
     challenge.do_compute()
-    # print "Next Challenge URL: " + challenge.get_next_level_url()
-    # Next Challenge URL:
+    print "Next Challenge URL: " + challenge.get_next_level_url()
+    # Next Challenge URL: http://www.pythonchallenge.com/pc/hex/bonus.html

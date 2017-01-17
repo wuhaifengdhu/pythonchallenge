@@ -1,4 +1,5 @@
 from web_helper import WebHelper
+from file_helper import FileHelper
 from cStringIO import StringIO
 from date_helper import DateHelper
 from PIL import Image
@@ -25,6 +26,7 @@ class ImageHelper(object):
             tmp_file = 'tmp_%s.jpg' % DateHelper.get_current_timestamp()
             ImageHelper.save_image_file(data, tmp_file)
             ImageHelper.show_from_file(tmp_file)
+            FileHelper.remove_file(tmp_file)
 
     @staticmethod
     def show_from_file(local_image_file):
@@ -41,4 +43,13 @@ class ImageHelper(object):
         opener = open(local_file, 'wb')
         opener.write(image_data)
         opener.close()
+
+    @staticmethod
+    def create_image_from_web(img_url, user=None, password=None):
+        if user is None or password is None:
+            img_data = WebHelper.get_web_source(img_url)
+        else:
+            img_data = WebHelper.get_auth_web_source(img_url, user, password)
+        return Image.open(StringIO(img_data))
+
 

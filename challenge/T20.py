@@ -67,6 +67,12 @@ class T20(Challenge):
         # step 4, unzip local zip file
         FileHelper.unzip_file_with_password(local_zip_file, invader_password)
 
+        # step 5, clean unused file
+        FileHelper.remove_file(local_zip_file)
+
+        # step 6, set next used file
+        self.set_next_level_url('package.pack')
+
     @staticmethod
     def get_content_range(content_range):
         pattern = re.compile('bytes (\d+)-(\d+)/(\d+)')
@@ -91,5 +97,5 @@ if __name__ == '__main__':
 
     challenge = T20(current_url, True, 'butter', 'fly')
     challenge.do_compute()
-    # print "Next Challenge URL: " + challenge.get_next_level_url()
+    print "Next Challenge URL: " + challenge.get_next_level_url()
     # Next Challenge URL: 

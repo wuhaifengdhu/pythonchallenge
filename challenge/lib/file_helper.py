@@ -1,6 +1,7 @@
 import shutil
 import os
 import gzip
+import time
 from zipfile import ZipFile
 
 
@@ -9,11 +10,13 @@ class FileHelper(object):
     @staticmethod
     def remove_file(file_path):
         print "Removed file: " + file_path
+        time.sleep(3)
         os.remove(file_path)
 
     @staticmethod
     def remove_folder(folder_path):
         print "Removed folder: " + folder_path
+        time.sleep(3)
         shutil.rmtree(folder_path)
 
     @staticmethod
@@ -38,6 +41,25 @@ class FileHelper(object):
 
     @staticmethod
     def unzip_file_with_password(zip_file, password):
-        zip = ZipFile(zip_file)
-        zip.extractall(pwd=password)
-        zip.close()
+        zip_opener = ZipFile(zip_file)
+        zip_opener.extractall(pwd=password)
+        zip_opener.close()
+
+    @staticmethod
+    def unzip_to_directory(zip_file, local_directory):
+        zip_opener = ZipFile(zip_file)
+        zip_opener.extractall(local_directory)
+        zip_opener.close()
+
+    @staticmethod
+    def mkdir(local_dir):
+        os.makedirs(local_dir)
+
+    @staticmethod
+    def join_path(parent, child):
+        return os.path.join(parent, child)
+
+
+if __name__ == '__main__':
+    FileHelper.unzip_to_directory('../maze.zip', '.')
+

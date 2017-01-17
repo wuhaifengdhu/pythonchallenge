@@ -5,14 +5,16 @@
 import zlib
 import bz2
 from lib.web_helper import WebHelper
+from lib.file_helper import FileHelper
 
 
 class T21(object):
-    def __init__(self, local_file, web_url):
-        self.file_name = local_file
+    def __init__(self, file_name, web_url):
+        self.file_name = file_name
         self.url = web_url
         self._next_level_url = ''
         self.unwrap()
+        self.clean_unused_files()
 
     def unwrap(self):
         result = ""
@@ -32,6 +34,9 @@ class T21(object):
                     break
             print(result)  # COPPER
             self._next_level_url = WebHelper.join_url(self.url, 'copper')
+
+    def clean_unused_files(self):
+        FileHelper.remove_file(self.file_name)
 
     def get_next_level_url(self):
         return self._next_level_url

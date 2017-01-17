@@ -4,6 +4,7 @@ from urllib import urlretrieve
 from urllib import quote_plus, unquote_plus
 import cookielib
 import requests
+import re
 from requests.auth import HTTPBasicAuth
 from text_helper import TextHelper
 
@@ -158,9 +159,19 @@ class WebHelper(object):
         print "get new prompt url: %s" % prompt_url
         return prompt_url
 
+    @staticmethod
+    def url_add(web_url):
+        print "Add 1 to url: %s" % web_url
+        page = WebHelper.get_url_page(web_url)
+        (prefix, num, suffix) = re.search('(\w+[a-zA-Z])([0-9]+)(\.\w+)', page).groups()
+        new_url = WebHelper.join_url(web_url, prefix + str(int(num) + 1) + suffix)
+        print "Get: %s" % new_url
+        return new_url
+
 
 if __name__ == '__main__':
     # print WebHelper.get_traverse_url_content("http://www.pythonchallenge.com/pc/def/274877906944.html")
-    WebHelper.download_with_auth('http://www.pythonchallenge.com/pc/return/cave.jpg')
+    # WebHelper.download_with_auth('http://www.pythonchallenge.com/pc/return/cave.jpg')
+    WebHelper.url_add("some/w4u2.jo")
 
 
