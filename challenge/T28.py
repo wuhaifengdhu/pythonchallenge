@@ -7,8 +7,6 @@ from lib.challenge import Challenge
 from lib.text_helper import TextHelper
 from lib.web_helper import WebHelper
 from lib.image_helper import ImageHelper
-from PIL import Image
-from cStringIO import StringIO
 
 
 class T28(Challenge):
@@ -18,13 +16,28 @@ class T28(Challenge):
         png_url = WebHelper.join_url(self.url, png_url)
         print "Get png from web url: %s" % png_url
         bell_png = ImageHelper.create_image_from_web(png_url, self.user, self.password)
-        green = list(bell_png.split()[1].getdata())
+        green = bell_png.split()[1]
+        message = ""
+        for a, b in T28.paired(green.getdata()):
+            diff = abs(a - b)
+            if diff != 42:
+                message += chr(diff)
+        print 'Prompt Message: %s' % message   # whodunnit().split()[0] ?
 
-        diff = [abs(a - b) for a, b in zip(green[0::2], green[1::2])]
-        filtered = list(filter(lambda x: x != 42, diff))
-        decoded = bytes(filtered).decode()
-        print str(decoded)
+        # step 2, set prompt
+        prompt = self.whodunnit().split()[0]
+        self.set_prompt(prompt.lower())
 
+    @staticmethod
+    def paired(data):
+        data = iter(data)
+        while True:
+            yield data.next(), data.next()
+
+    @staticmethod
+    def whodunnit():
+        python_creator = 'Guido van Rossum'
+        return python_creator
 
 
 if __name__ == '__main__':
@@ -32,6 +45,5 @@ if __name__ == '__main__':
     print "start with url: " + current_url
 
     challenge = T28(current_url, True, 'repeat', 'switch')
-    challenge.do_compute()
-    # print "Next Challenge URL: " + challenge.get_next_level_url()
-    # Next Challenge URL: 
+    print "Next Challenge URL: " + challenge.get_next_level_url()
+    # Next Challenge URL: http://www.pythonchallenge.com/pc/ring/guido.html
