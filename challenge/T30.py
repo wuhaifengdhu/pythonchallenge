@@ -6,6 +6,7 @@
 from lib.challenge import Challenge
 from lib.text_helper import TextHelper
 from lib.web_helper import WebHelper
+from lib.image_helper import ImageHelper
 from PIL import Image
 from cStringIO import StringIO
 
@@ -27,14 +28,28 @@ class T30(Challenge):
         print "Get prompt url: %s" % prompt_url
 
         # step 2, get prompt message
+        raw_data = WebHelper.get_auth_web_source(prompt_url, self.user, self.password)
+        data = [x.strip() for x in raw_data.split(",")]
+        length = len(data)
+        print "Length of data: %s" % length
+        factors = [x for x in range(2, length) if length % x == 0]
 
+        img = Image.new('F', (factors[0], factors[1]))
+        img.putdata([float(x) for x in data], 256)
+        img = img.transpose(Image.FLIP_LEFT_RIGHT)
+        img = img.transpose(Image.ROTATE_90)
+        # img.show()
 
+        # step 3, set prompt
+        res = ''.join(map(chr, [int(x[0][5] + x[1][5] + x[2][6]) for x in zip(data[0::3], data[1::3], data[2::3])]))
+        print res
+        prompt = TextHelper.find_text_between_tag(res, 'look at ', '",')
+        self.set_prompt(prompt)
 
 if __name__ == '__main__':
     current_url = 'http://www.pythonchallenge.com/pc/ring/yankeedoodle.html'
     print "start with url: " + current_url
 
     challenge = T30(current_url, True, 'repeat', 'switch')
-    challenge.do_compute()
-    # print "Next Challenge URL: " + challenge.get_next_level_url()
-    # Next Challenge URL:
+    print "Next Challenge URL: " + challenge.get_next_level_url()
+    # Next Challenge URL: http://www.pythonchallenge.com/pc/ring/grandpa.html

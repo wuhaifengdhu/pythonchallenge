@@ -91,6 +91,11 @@ class WebHelper(object):
         return urllib2.urlopen(url).read()
 
     @staticmethod
+    def get_auth_web_source2(url, auth):
+        response = requests.get(url, auth=auth)
+        return response.content
+
+    @staticmethod
     def join_url(origin_url, prompt):
         if "." not in prompt:
             suffix_index = origin_url.rindex(".")
