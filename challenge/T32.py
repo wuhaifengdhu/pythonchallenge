@@ -25,7 +25,7 @@ class T32(Challenge):
 
         # step 2, solve first etch-a-scetch
         file_content = WebHelper.get_auth_url_content(warm_up_url, self.user, self.password)[1]
-        print "Words in warmup.txt:\n%s" % file_content
+        # print "Words in warmup.txt:\n%s" % file_content
         sketch = Sketch(file_content)
         # sketch.play_game()
         prompt = 'up'
@@ -36,10 +36,18 @@ class T32(Challenge):
         file_content = WebHelper.get_auth_url_content(second_file, self.user, self.password)[1]
         sketch = Sketch(file_content)
         # sketch.play_game()
-        prompt = 'python'
-        print "It shows a picture of %s" % prompt
+        python = 'python'
+        print "It shows a picture of %s" % python
 
-        # step 4, set next url prompt
+        # step 4, search the wiki get prompt information
+        python_url = WebHelper.join_url(self.url, python)
+        print "Python url: %s" % python_url
+        file_content = WebHelper.get_auth_web_source(python_url, self.user, self.password)
+        print TextHelper.find_text_between_tag(file_content, '<font color="gold">', '</font>')
+        prompt = 'beer'
+        print "Search on the wiki %s is the words next to Free" % prompt
+
+        # step 5, set prompt for next url
         self.set_prompt(prompt)
 
 
@@ -49,4 +57,4 @@ if __name__ == '__main__':
 
     challenge = T32(current_url, True, "kohsamui", "thailand")
     print "Next Challenge URL: " + challenge.get_next_level_url()
-    # Next Challenge URL:
+    # Next Challenge URL: http://www.pythonchallenge.com/pc/rock/beer.html
