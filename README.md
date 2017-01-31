@@ -1,6 +1,6 @@
 # python challenge
-A great website to learning python. Go: http://www.pythonchallenge.com/    
-This will automatically solve one level's problem and get the next level url, and then iteration util all these level from 0 to 33(the final level) solved.
+Python challenge is a great website to learning python. Link: http://www.pythonchallenge.com/            
+This project tried an automatically way to solve all these level's problem. That means solved one level's problem and then get the next level url, and then iteration util all these level from 0 to 33(the final level) solved.
 
 
 1, Pre-request   
