@@ -31,7 +31,6 @@ class T33(Challenge):
         beer_img = ImageHelper.create_image_from_web(beer_url, self.user, self.password)
         data = list(beer_img.getdata())
         local_dir = 'img_data'
-        FileHelper.remove_folder(local_dir)
         FileHelper.mkdir(local_dir)
         print len(data)
         count = 0
@@ -51,6 +50,7 @@ class T33(Challenge):
         prompt = 'gremlins'
         print "but only characters %s are in square" % str(list(prompt))
         self.set_prompt(prompt)
+        FileHelper.remove_folder(local_dir)
 
     @staticmethod
     def is_int_sqrt(number):

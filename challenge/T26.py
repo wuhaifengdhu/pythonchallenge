@@ -8,6 +8,7 @@ from lib.email_helper import EmailHelper, Email
 from lib.text_helper import TextHelper
 from lib.file_helper import FileHelper
 from lib.image_helper import ImageHelper
+from socket import error
 import hashlib
 import string
 import array
@@ -23,16 +24,21 @@ class T26(Challenge):
         leopold_email_address = 'leopold.moz@pythonchallenge.com'
         leo_mail = Email(None, leopold_email_address, 'Apology', 'Sorry!')
         EmailHelper.send_mail(leo_mail)
-        leo_response = EmailHelper.get_latest_email(leopold_email_address)
-        if leo_response is not None:
-            print "Response email content: %s" % leo_response.get_payload()
+        try:
+            leo_response = EmailHelper.get_latest_email(leopold_email_address)
+            if leo_response is not None:
+                print "Response email content: %s" % leo_response.get_payload()
+        except error:
+            print "This may be timeout from out of mainland china!"
+            print "You can check from web to get this email content."
+        print ''' Email content:
         # Never mind that.
         #
         # Have you found my broken zip?
         #
         # md5: bbb8b499a0eef99b52c7f13f4e78c24b
         #
-        # Can you believe what one mistake can lead to?
+        # Can you believe what one mistake can lead to?'''
 
         # step 2, decode mybroken.zip
         zip_file = 'mybroken.zip'
@@ -54,6 +60,8 @@ class T26(Challenge):
         # step 4, clean unused file
         FileHelper.remove_file(repair_file)
         FileHelper.remove_folder(local_dir)
+        FileHelper.remove_file('readme.txt')
+        FileHelper.remove_file(zip_file)
 
     @staticmethod
     def fix(data, good_md5):

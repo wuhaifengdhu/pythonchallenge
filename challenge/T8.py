@@ -20,6 +20,7 @@ class T8(Challenge):
         password_encode = TextHelper.find_text_between_tag(self.web_source, "pw: '", "'")
         password = bz2.decompress(password_encode.decode('string_escape'))
         print "password = " + password   # file
+        self.result.set_user_password(user, password)
 
         # step 2. Login with user, password
         self.set_next_level_url(login_url)

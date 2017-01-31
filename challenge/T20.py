@@ -71,7 +71,7 @@ class T20(Challenge):
         FileHelper.remove_file(local_zip_file)
 
         # step 6, set next used file
-        self.set_next_level_url('package.pack')
+        self.result.set_file('package.pack')
 
     @staticmethod
     def get_content_range(content_range):

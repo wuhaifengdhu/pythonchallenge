@@ -7,6 +7,7 @@ from lib.challenge import Challenge
 from lib.text_helper import TextHelper
 from lib.web_helper import WebHelper
 from lib.image_helper import ImageHelper
+from urllib2 import HTTPError
 from PIL import Image
 import bz2
 import keyword
@@ -46,15 +47,22 @@ class T27(Challenge):
             if not keyword.iskeyword(i):
                 auth.add(i)
         # print repeat, switch, ../ring/bell
+        auth = list(auth)
         print auth
+        for item in auth:
+            if 'html' in item:
+                next_level_url = WebHelper.join_url(self.url, item)
+                auth.remove(item)
+        try:
+            content_ignore = WebHelper.get_auth_web_source(next_level_url, auth[0], auth[1])
+            self.result.set_user_password(auth[0], auth[1])
+            print "Set next level user, password = (%s, %s)" % (auth[0], auth[1])
+        except HTTPError:
+            self.result.set_user_password(auth[1], auth[0])
+            print "Set next level user, password = (%s, %s)" % (auth[1], auth[0])
 
         # step 3, set next level url
-        for key in auth:
-            if 'html' in key:
-                self.set_prompt(key)
-                auth.remove(key)
-                print auth
-                break
+        self.set_next_level_url(next_level_url)
 
 
 if __name__ == '__main__':

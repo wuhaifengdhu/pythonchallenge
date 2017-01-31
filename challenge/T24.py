@@ -41,7 +41,7 @@ class T24(Challenge):
         # step 3, get information from path
         zip_file = 'maze.zip'
         open('maze.zip', 'wb').write(''.join([chr(maze_img.getpixel(pos[0])[0]) for pos in queue[1::2]]))
-        FileHelper.unzip_to_directory(zip_file)
+        FileHelper.unzip_to_directory(zip_file, '.')
 
         # step 4, get prompt information from picture
         maze_jpg = 'maze.jpg'
@@ -81,7 +81,9 @@ class T24(Challenge):
 
     @staticmethod
     def run_next_by_next(maze, queue):
+        count = 0
         while True:
+            count += 1
             if len(queue) == 0:
                 # This means get out of from the entrance
                 print "Can not find the path from entrance%s to export%s" % (str(maze['entrance']), str(maze['export']))
@@ -89,11 +91,10 @@ class T24(Challenge):
             current_pos = queue[len(queue) - 1]
             if current_pos[0] == maze['export']:
                 # This means get out of maze from export
-                print "Success get out of maze from export%s" % str(maze['export'])
+                print "Success get out of maze from export%s after %i iterations" % (str(maze['export']), count)
                 return
             if current_pos[1] == 4:
                 # This means tried all direction 0, 1, 2, 3, so this way is not right
-                maze['zone'][str(current_pos[0])] = 255  # block this road as no exit
                 print "Block position%s set value to %d" % (str(current_pos[0]), maze['zone'][str(current_pos[0])])
                 queue.pop()  # pop out this node
                 queue[len(queue) - 1][1] += 1  # try next direction in parent node
@@ -101,9 +102,10 @@ class T24(Challenge):
             # check for this direction
             direction = maze['direction'][current_pos[1]]
             new_pos = (current_pos[0][0] + direction[0], current_pos[0][1] + direction[1])
-            if maze['zone'][str(new_pos)] == 0 and new_pos not in [pos[0] for pos in queue]:
+            if maze['zone'][str(new_pos)] == 0:
                 # Good direction, add this node into queue
                 print "Added node position%s" % str(new_pos)
+                maze['zone'][str(new_pos)] = 255  # block this road as it is already tried
                 queue.append([new_pos, 0])
             else:
                 # Bad direction, try another direction

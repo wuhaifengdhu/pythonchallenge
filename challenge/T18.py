@@ -39,6 +39,8 @@ class T18(Challenge):
 
         # from image, we can see "../hex/bin.html", "butter", "fly"  ==> These last two words will be used in next level
         prompt_url = "../hex/bin.html"
+        print 'we can see "../hex/bin.html", "butter", "fly" in these image, set new user, password for next level'
+        self.result.set_user_password("butter", "fly")
 
         # step 4, set prompt
         self.set_prompt(prompt_url)

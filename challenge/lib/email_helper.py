@@ -71,7 +71,7 @@ class EmailHelper(object):
     def get_latest_email(sender=None, email_config_=None):
         print "Starting to fetch the latest email!"
         email_config = default_email_config if email_config_ is None else email_config_
-        handler = poplib.POP3(email_config.email_server.pop_server)
+        handler = poplib.POP3(email_config.email_server.pop_server, timeout=10)
         handler.user(email_config.user_config.user_account)
         handler.pass_(email_config.user_config.password)
         count, size = handler.stat()
@@ -93,9 +93,9 @@ if __name__ == '__main__':
     my_email = Email(default_user, 'leopold.moz@pythonchallenge.com', 'Apology', 'Sorry!')
     EmailHelper.send_mail(my_email)
 
-    # latest_mail = EmailHelper.get_latest_email('leopold.moz@pythonchallenge.com')
-    # if latest_mail is not None:
-    #     print "sender: %s" % latest_mail['From']
-    #     print "Receiver: %s" % latest_mail['To']
-    #     print "Subject: %s" % latest_mail['Subject']
-    #     print "Content: %s" % latest_mail.get_payload()
+    latest_mail = EmailHelper.get_latest_email('leopold.moz@pythonchallenge.com')
+    if latest_mail is not None:
+        print "sender: %s" % latest_mail['From']
+        print "Receiver: %s" % latest_mail['To']
+        print "Subject: %s" % latest_mail['Subject']
+        print "Content: %s" % latest_mail.get_payload()

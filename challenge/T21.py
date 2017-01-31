@@ -6,45 +6,46 @@ import zlib
 import bz2
 from lib.web_helper import WebHelper
 from lib.file_helper import FileHelper
+from lib.challenge import Challenge
+from lib.challenge import Result
 
 
-class T21(object):
-    def __init__(self, file_name, web_url):
-        self.file_name = file_name
-        self.url = web_url
-        self._next_level_url = ''
-        self.unwrap()
-        self.clean_unused_files()
-
-    def unwrap(self):
-        result = ""
+class T21(Challenge):
+    def do_compute(self):
+        # step 1. Get information from file
+        output = ""
         with open(self.file_name, "rb") as f:
             data = f.read()
             while True:
                 if data.startswith(b'x\x9c'):
                     data = zlib.decompress(data)
-                    result += ' '
+                    output += ' '
                 elif data.startswith(b'BZh'):
                     data = bz2.decompress(data)
-                    result += '#'
+                    output += '#'
                 elif data.endswith(b'\x9cx'):
                     data = data[::-1]
-                    result += '\n'
+                    output += '\n'
                 else:
                     break
-            print(result)  # COPPER
-            self._next_level_url = WebHelper.join_url(self.url, 'copper')
+            print(output)  # COPPER
+            prompt = 'copper'
+            print "From the print image we can see word %s" % prompt
 
-    def clean_unused_files(self):
+        # step 2. set prompt
+        self.set_prompt(prompt)
+
+        # step 3. clean unused file
         FileHelper.remove_file(self.file_name)
-
-    def get_next_level_url(self):
-        return self._next_level_url
 
 
 if __name__ == '__main__':
     last_level_url = 'http://www.pythonchallenge.com/pc/hex/idiot2.html'
     local_file = 'package.pack'
-    challenge = T21(local_file, last_level_url)
+    result = Result()
+    result.set_url(last_level_url)
+    result.set_file(local_file)
+    result.set_user_password('butter', 'fly')
+    challenge = T21(result)
     print "Next Challenge URL: " + challenge.get_next_level_url()
     # Next Challenge URL: http://www.pythonchallenge.com/pc/hex/copper.html

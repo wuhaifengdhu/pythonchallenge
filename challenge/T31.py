@@ -18,6 +18,8 @@ class T31(Challenge):
         question = TextHelper.find_text_between_tag(self.web_source, '<title>', '</title>')
         print "The title asked us: %s" % question
         answer = ("kohsamui", "thailand")
+        self.result.set_user_password(answer[0], answer[1])
+        print "Set next level user, password = (%s, %s)" % answer
         print "Search google by this photograph, you can find the place: %s, %s" % answer
         prompt = TextHelper.find_text_between_tag(self.web_source, '<a href="', '"><img src')
         new_url = WebHelper.join_url(self.url, prompt)

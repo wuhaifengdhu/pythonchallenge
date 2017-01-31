@@ -40,6 +40,5 @@ if __name__ == '__main__':
     print "start with url: " + current_url
 
     challenge = T16(current_url, True)
-    # challenge.do_compute()
     print "Next Challenge URL: " + challenge.get_next_level_url()
     # Next Challenge URL: http://www.pythonchallenge.com/pc/return/romance.html

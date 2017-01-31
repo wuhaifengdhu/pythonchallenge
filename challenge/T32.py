@@ -10,7 +10,7 @@
 from lib.challenge import Challenge
 from lib.text_helper import TextHelper
 from lib.web_helper import WebHelper
-from lib.etch_a_scetch import Sketch
+from lib.dracz import Sketch
 from PIL import Image
 from cStringIO import StringIO
 
@@ -26,16 +26,18 @@ class T32(Challenge):
         # step 2, solve first etch-a-scetch
         file_content = WebHelper.get_auth_url_content(warm_up_url, self.user, self.password)[1]
         # print "Words in warmup.txt:\n%s" % file_content
-        sketch = Sketch(file_content)
+        # sketch = Sketch(file_content)
         # sketch.play_game()
+        Sketch.play_game(file_content)
         prompt = 'up'
         print "It shows an %s tag" % prompt
         second_file = WebHelper.join_url(warm_up_url, prompt)
 
         # step 3, solve the second etch-a-scetch
         file_content = WebHelper.get_auth_url_content(second_file, self.user, self.password)[1]
-        sketch = Sketch(file_content)
+        # sketch = Sketch(file_content)
         # sketch.play_game()
+        Sketch.play_game(file_content)
         python = 'python'
         print "It shows a picture of %s" % python
 
