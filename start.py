@@ -6,12 +6,10 @@ from challenge.lib.text_helper import TextHelper
 if __name__ == '__main__':
     # step 1. Set start parameters
     start = Result()
-    # start.set_url('http://www.pythonchallenge.com/pc/def/0.html')
-    start.set_url('http://www.pythonchallenge.com/pc/hex/decent.html')
-    start.set_user_password('butter', 'fly')
+    start.set_url('http://www.pythonchallenge.com/pc/def/0.html')
 
     # step 2. Run iterator to solve these challenge
-    for i in range(26, 34, 1):
+    for i in range(0, 34):
         print "Level %i" % i
         print "start with url: " + start.url
         Challenger = getattr(importlib.import_module("challenge.T%i" % i), "T%i" % i)
